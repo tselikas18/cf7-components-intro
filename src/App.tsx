@@ -1,21 +1,30 @@
-import ClassComponent from "./components/ClassComponent.tsx";
-import FunctionalComponent from "./components/FunctionalComponent.tsx";
-import ArrowFunctionalComponent from "./components/ArrowFunctionalComponent.tsx";
-import ArrowFunctionalComponentWithProps from "./components/ArrowFunctionComponentWithProps.tsx";
-import ArrowFunctionalComponentWithPropsType from "./components/ArrowFunctionComponentWithPropsType.tsx";
+// import ClassComponent from "./components/ClassComponent.tsx";
+// import ArrowFunctionalComponent from "./components/ArrowFunctionalComponent.tsx";
+// import ArrowFunctionalComponentWithProps from "./components/ArrowFunctionComponentWithProps.tsx";
+// import ArrowFunctionalComponentWithPropsType from "./components/ArrowFunctionComponentWithPropsType.tsx";
+import Layout from "./components/Layout.tsx";
+import FunctionalComponentWithState from "./components/FunctionalComponentWithState.tsx";
+// import ClassComponent from "./components/ClassComponent.tsx";
+// import ClassComponentWithState from "./components/ClassComponentWithState.tsx";
+// import FunctionalComponent from "./components/FunctionalComponent.tsx";
 
 function App() {
 
 
   return (
     <>
-        <ClassComponent/>
-        <FunctionalComponent/>
-        <ArrowFunctionalComponent/>
-        <ArrowFunctionalComponentWithProps title="is arrow functional component with props"/>
-        <ArrowFunctionalComponentWithPropsType title="is arrow functional component with props"
-                                               description="this is desciptions"/>
 
+        <Layout>
+            {/*<FunctionalComponent/>*/}
+            {/*<ClassComponent/>*/}
+            {/*<FunctionalComponent/>*/}
+            {/*<ArrowFunctionalComponent/>*/}
+            {/*<ArrowFunctionalComponentWithProps title="is arrow functional component with props"/>*/}
+            {/*<ArrowFunctionalComponentWithPropsType title="is arrow functional component with props"*/}
+            {/*                                       description="this is desciption"/>*/}
+            {/*<ClassComponentWithState/>*/}
+            <FunctionalComponentWithState/>
+        </Layout>
     </>
   )
 }
