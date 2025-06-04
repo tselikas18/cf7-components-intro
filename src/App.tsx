@@ -5,6 +5,7 @@
 import Layout from "./components/Layout.tsx";
 // import FunctionalComponentWithState from "./components/FunctionalComponentWithState.tsx";
 import Counter from "./components/Counter.tsx";
+import NameChanger from "./components/NameChanger.tsx";
 // import ClassComponent from "./components/ClassComponent.tsx";
 // import ClassComponentWithState from "./components/ClassComponentWithState.tsx";
 // import FunctionalComponent from "./components/FunctionalComponent.tsx";
@@ -26,6 +27,7 @@ function App() {
             {/*<ClassComponentWithState/>*/}
             {/*<FunctionalComponentWithState/>*/}
             <Counter/>
+            <NameChanger/>
         </Layout>
     </>
   )
