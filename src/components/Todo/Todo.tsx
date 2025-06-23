@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import TodoForm from "../Todo/TodoForm.tsx";
-// import TodoList from "./TodoList.tsx";
+import TodoList from "../Todo/TodoList.tsx";
 
 type TodoProps = {
     id: number;
@@ -35,7 +35,7 @@ const Todo = () =>{
             <div className="max-w-sm mx-auto p-6">
                 <h1 className="text-center text-2xl mb-4">To-Do List</h1>
                 <TodoForm dispatch={dispatch} />
-                {/*<TodoList todos={todos} dispatch={dispatch} />*/}
+                <TodoList todos={todos} dispatch={dispatch} />
             </div>
         </>
     )
