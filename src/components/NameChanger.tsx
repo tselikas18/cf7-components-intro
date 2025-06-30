@@ -7,6 +7,7 @@ const NameChanger =() => {
         setName(e.target.value)
     }
 
+
     useEffect(() => {
 
       document.title = name ? `Hello, ${name}!` : 'Hello, Stranger!';
