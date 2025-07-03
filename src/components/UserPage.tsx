@@ -6,7 +6,7 @@ const UserPage = () => {
 
   useEffect(() => {
     document.title = `User with id: ${userId}`;
-  }, []);
+  }, [userId]);
   return (
       <>
         <h1>user with id: 12</h1>
