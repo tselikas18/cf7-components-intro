@@ -2,7 +2,7 @@
 // import ArrowFunctionalComponent from "./components/ArrowFunctionalComponent.tsx";
 // import ArrowFunctionalComponentWithProps from "./components/ArrowFunctionComponentWithProps.tsx";
 // import ArrowFunctionalComponentWithPropsType from "./components/ArrowFunctionComponentWithPropsType.tsx";
-import Layout from "./components/Layout.tsx";
+// import Layout from "./components/Layout.tsx";
 // import CounterAdvanced from "./components/CounterAdvanced.tsx";
 // import CounterWithCustomHook from "./components/CounterWithCustomHook.tsx";
 // import CounterAdvancedWithCustomHook from "./components/CounterAdvancedWithCustomHook.tsx";
@@ -21,6 +21,11 @@ import HomePage from "./pages/HomePage.tsx";
 import NameChangerPage from "./pages/NameChangerPage.tsx";
 import OnlineStatusPage from "./pages/OnlineStatusPage.tsx";
 import UserPage from "./components/UserPage.tsx";
+import RouterLayout from "./components/RouterLayout.tsx";
+import ExamplesPage from "./pages/ExamplesPage.tsx";
+import RouterExamplesLayout from "./components/RouterExamplesLayout.tsx";
+import AutoRedirectPage from "./pages/AutoRedirectPage.tsx";
+import NotFoundPage from "./pages/NotFoundPage.tsx";
 
 function App() {
 
@@ -50,22 +55,31 @@ function App() {
         {/*</Layout>*/}
 
       <BrowserRouter>
-        <Layout>
+        {/*<Layout>*/}
           <Routes>
 
             {/*<Route path="/" element={<HomePage/>}/>*/}
-            <Route index element={<HomePage/>}/>
+            <Route element={<RouterLayout/>}>
+              <Route index element={<HomePage/>}/>
+            </Route>
+
             <Route path="name-changer" element={<NameChangerPage/>}/>
 
-            <Route path="examples?">
+            <Route path="examples" element={<RouterExamplesLayout/>}>
+              <Route index element={<ExamplesPage/>}/>
               <Route path="name-changer" element={<NameChangerPage/>}/>
               <Route path="online-status" element={<OnlineStatusPage/>}/>
+              <Route path="auto-redirect" element={<AutoRedirectPage/>}/>
             </Route>
+
             <Route path="users/:userId" element={<UserPage/>}/>
+            <Route path="users" element={<UserPage/>}/>
+            {/*<Route path="files/*" element={<FilePage/>}/>*/}
             {/*<Route path="examples?/name-changer" element={<NameChangerPage/>}/>*/}
+            <Route path="*" element={<NotFoundPage/>}/>
 
           </Routes>
-        </Layout>
+        {/*</Layout>*/}
       </BrowserRouter>
 
     </>
