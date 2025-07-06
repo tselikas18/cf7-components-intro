@@ -1,6 +1,7 @@
 import {z} from "zod";
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button"
 
 const formSchema = z.object({
   name: z
@@ -101,16 +102,14 @@ const MultiFieldFormWithReactHook = () => {
                   className="bg-gray-200 text-cf-gray-700 px-4 py-2 rounded">
                 Clear
               </button>
+              <Button>Click me</Button>
             </div>
-
-            {/*{ watchedValues && (*/}
-                <div className="mt-6 border-t pt-4 space-y-2">
-                  <h2 className="font-semibold">Live Data</h2>
-                  <p><strong>Name:</strong> {watchedValues.name}</p>
-                  <p><strong>Email:</strong> {watchedValues.email}</p>
-                  <p><strong>Message:</strong> {watchedValues.message}</p>
-                </div>
-            {/*)}*/}
+            <div className="mt-6 border-t pt-4 space-y-2">
+              <h2 className="font-semibold">Live Data</h2>
+              <p><strong>Name:</strong> {watchedValues.name}</p>
+              <p><strong>Email:</strong> {watchedValues.email}</p>
+              <p><strong>Message:</strong> {watchedValues.message}</p>
+            </div>
 
           </form>
         </div>
