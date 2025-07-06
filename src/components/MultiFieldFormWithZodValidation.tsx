@@ -36,40 +36,34 @@ const MultiFieldFormWithZodValidation = () => {
   const [values, setValues] = useState<FormValues>(initialValues);
   const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
   const [errors, setErrors] = useState<FormErrors | null>(null);
-  const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+  //const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 
-  const validateForm = (values: FormValues): FormErrors => {
-    const errors: FormErrors = {};
-
-    if (!values.name.trim()) {
-      errors.name = "Name is required";
+  const validateForm = ()=> {
+    const result = formSchema.safeParse(values);
+    // {success: true, data: validateData}
+    // {success: false, errors: errors};
+    if (!result.success) {
+      const newErrors: FormErrors = {}
+      result.error.issues.forEach((issue) => {
+        const filedName = issue.path[0] as keyof FormValues;
+        newErrors[filedName] = issue.message;
+      });
+      setErrors(newErrors);
+      return false;
     }
-
-    if (!values.email.trim() || !emailRegex.test(values.email.trim())) {
-      errors.email = "Email is required";
-    }
-
-    if (!values.message.trim() || values.message.length < 5) {
-      errors.message = "Message must be at least 5 characters";
-    }
-
-    return errors;
+    setErrors({});
+    return true;
   }
 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validateForm(values);
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      setSubmittedData(null);
-      return;
+    const isValid = validateForm();
+    if (isValid) {
+      setSubmittedData(values);
+      setValues(initialValues);
     }
 
-    setSubmittedData(values);
-    setValues(initialValues);
-    setErrors(null);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
