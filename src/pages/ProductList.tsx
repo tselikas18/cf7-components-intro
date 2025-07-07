@@ -63,7 +63,7 @@ const ProductList= () => {
                 <TableRow key={product.id}>
                 <TableCell>{product.id}</TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.price} $</TableCell>
+                <TableCell>{product.price} €</TableCell>
                 <TableCell className="text-right space-x-2">
 
                   <Button

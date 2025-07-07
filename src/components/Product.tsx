@@ -1,8 +1,7 @@
 import {useNavigate, useParams} from "react-router";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {getProduct, productFormSchema, updateProduct} from "@/api/products.ts";
-import {type ProductType} from "@/api/products.ts"
+import {getProduct, productFormSchema, updateProduct, createProduct, type ProductType} from "@/api/products.ts";
 import {Label} from "@/components/ui/label"
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea.tsx";
@@ -11,10 +10,14 @@ import {Button} from "@/components/ui/button.tsx";
 import {useEffect} from "react";
 import {toast} from "sonner";
 
+type ProductModeProps = {
+  mode?: "edit" | "create";
+}
 
-const Product=() => {
+const Product=({mode} : ProductModeProps) => {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const isEdit = mode === "edit" || !(!productId && mode === "create");
 
     const {
       register,
@@ -39,18 +42,22 @@ const Product=() => {
 
   const onSubmit = async (data: Omit<ProductType, "id" > ) => {
     try {
-      if (productId) {
+      if (productId && isEdit) {
         await updateProduct(Number(productId), data)
-        toast.success("Product updated successfully.")
-        navigate("/products");
-      }
+        toast.success("Product updated!")
+
+      } else {
+          await createProduct(data);
+          toast.success("Product created!")
+        }
+      navigate("/products");
       } catch (error) {
       toast.error(error instanceof Error ? error.message: "Something went wrong.")
     }
   }
 
   useEffect(() => {
-    if (productId) {
+    if (isEdit && productId) {
       getProduct(Number(productId))
           .then((data) => {
             const values = {
@@ -77,7 +84,7 @@ const Product=() => {
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="max-w-xl mx-auto mt-12 p-8 border rounded-lg space-y-4">
-          <h1 className="text-xl font-bold">Edit Product</h1>
+          <h1 className="text-xl font-bold">{isEdit ? "Edit Product" : "Create New Product"}</h1>
           <div>
             <Label className="mb-1" htmlFor="name">
               Name
@@ -120,7 +127,7 @@ const Product=() => {
           </div>
           <div>
             <Label className="mb-1" htmlFor="price">
-              Price
+              Price(€)
             </Label>
             <Input
                 id="price"
