@@ -9,18 +9,22 @@ export const productSchema = z.object({
   slug: z
       .string()
       .min(1, "Required")
-      .regex(/^[a-zA-Z0-9-_]+$/, "Slug must ure only Latin letters, numbers, - or _"),
+      .regex(
+          /^[a-zA-Z0-9-_]+$/,
+          "Slug must use only Latin letters, numbers, - or _",
+      ),
   description: z.string().optional(),
-  image: z.string().url("Must be valid URL").optional(),
-  price: z.coerce.number().nonnegative("Must be greater than 0"),
-  sort: z.coerce.number().int(),
+  image: z.string().url("Must be a valid URL").optional(),
+  price: z.coerce.number().nonnegative("Must be a non-negative number"),
+  sort: z.coerce.number().int().min(0, "Must be a non-negative integer"),
   is_active: z.boolean(),
   is_favorite: z.boolean(),
-  category: z.coerce.number().int().min(1, "Category is Required"),
-})
+  category_id: z.coerce.number().int().min(1, "Category is required"),
+});
+
+export const productFormSchema = productSchema.omit({ id: true });
 
 export type ProductType = z.infer<typeof productSchema>;
-
 
 export async function getProducts(): Promise<ProductType[]> {
   const res = await fetch(`${API_URL}tenants/${TENANT_ID}/products/`);
@@ -30,23 +34,25 @@ export async function getProducts(): Promise<ProductType[]> {
   return data;
 }
 
-// export async function getProduct(id: number): Promise<ProductType> {
-//   const res = await fetch(`${API_URL}tenants/${TENANT_ID}/products/${id}`);
-//   if (!res.ok) throw new Error("Failed to fetch tenant");
-//   return await res.json();
-// }
+export async function getProduct(id: number): Promise<ProductType> {
+  const res = await fetch(`${API_URL}tenants/${TENANT_ID}/products/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch tenant");
+  return await res.json();
+}
 
 export async function updateProduct(id: number, data:{
-  name: string;
-  slug: string;
   description?: string | undefined;
   image?: string | undefined;
-  price: number,
-  is_active: boolean,
-  is_favorite: boolean,
-  sort: number,}
+  is_active: boolean;
+  is_favorite: boolean;
+  name: string;
+  price: number;
+  slug: string;
+  sort: number;},
 ): Promise<ProductType> {
-  const res = await fetch(`${API_URL}tenants/${TENANT_ID}/products/${id}`, {method: 'PUT',
+  const res = await fetch(`${API_URL}tenants/${TENANT_ID}/products/${id}`, {
+    method: 'PUT',
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Failed to update product");
